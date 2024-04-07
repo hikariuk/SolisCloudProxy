@@ -1,6 +1,6 @@
-// ****************************************************************************
-// File: Program.cs
-// Created: 2024-4-6 15:46
+﻿// ****************************************************************************
+// File: ISolisCloudProxyService.cs
+// Created: 2024-4-6 18:36
 // Created By: Chris Crowther
 // 
 // Copyright © 2024 Chris Crowther
@@ -30,21 +30,26 @@
 // LicenseRef-MIT
 // ****************************************************************************
 
-using SolisCloudProxy.Services;
+namespace SolisCloudProxy.Services;
 
-WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
-
-builder.Configuration.AddEnvironmentVariables("SolisCloudProxy_");
-
-// Add services to the container.
-builder.Services.AddControllers();
-
-// Add project services.
-builder.Services.AddScoped<ISolisCloudProxyService, SolisCloudProxyService>();
-
-WebApplication app = builder.Build();
-
-app.UseStatusCodePages();
-app.MapControllers();
-
-app.Run();
+/// <summary>
+/// Interface for classes implementing a proxy service for the Solis Cloud
+/// monitoring API.
+/// </summary>
+public interface ISolisCloudProxyService
+{
+    /// <summary>
+    /// Proxies the supplied <see cref="HttpRequest"/> to the Solis Cloud
+    /// Monitoring API.
+    /// </summary>
+    /// <param name="httpRequest">
+    /// A <see cref="HttpRequest"/> that contains the request to be proxied.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A <see cref="CancellationToken"/> that can be used to cancel the operation.
+    /// </param>
+    /// <returns>
+    /// The response from the remote server.
+    /// </returns>
+    public Task<HttpResponseMessage> ProxyRequestAsync(HttpRequest httpRequest, CancellationToken cancellationToken);
+}
