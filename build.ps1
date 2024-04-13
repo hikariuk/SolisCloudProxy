@@ -9,4 +9,4 @@ param(
     $Tag = "dev"
 )
 
-& docker build --build-arg "BUILD_CONFIGURATION=${Configuration}" -t solis-cloud-proxy:${Tag} -f src/SolisCloudProxy/Dockerfile .
+& docker build --build-arg "BUILD_CONFIGURATION=${Configuration}" -t hikariuk/solis-cloud-proxy:${Tag} -f src/SolisCloudProxy/Dockerfile .
